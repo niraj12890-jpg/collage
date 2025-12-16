@@ -1,38 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kisan Inter College | Official Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kisan Inter College</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <style>
-    body{font-family:Poppins,sans-serif;background:linear-gradient(135deg,#020b33,#040d4d);color:#fff}
-    .navbar{background:rgba(0,0,0,.4);backdrop-filter:blur(10px)}
-    .hero{min-height:100vh;display:flex;align-items:center}
-    .btn-modern{background:#3a86ff;border:none;border-radius:30px;padding:12px 28px;color:#fff}
-    .notice-bar{background:#3a86ff;white-space:nowrap;overflow:hidden}
-    .notice-text{display:inline-block;padding-left:100%;animation:scroll 15s linear infinite}
-    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
- <div class="container">
-  <a class="navbar-brand" href="index.html">Kisan Inter College</a>
- </div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Kisan Inter College</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="academics.html">Academics</a></li>
+        <li class="nav-item"><a class="nav-link" href="admission.html">Admission</a></li>
+        <li class="nav-item"><a class="nav-link" href="faculty.html">Faculty</a></li>
+        <li class="nav-item"><a class="nav-link" href="notice.html">Notice</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin-login.html">Admin</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
-<section class="hero">
- <div class="container" data-aos="fade-right">
-  <h1>Welcome to <span style="color:#3a86ff">Kisan Inter College</span></h1>
-  <p>UP Madhyamik Shiksha Parishad se manyata prapt (10+2)</p>
-  <a href="admission.html" class="btn btn-modern">Admission Open</a>
- </div>
+
+<!-- Hero Section -->
+<section class="hero bg-primary text-white text-center py-5">
+  <div class="container">
+    <h1>Welcome to Kisan Inter College</h1>
+    <p class="lead">Committed to excellence in education</p>
+    <a href="admission.html" class="btn btn-light btn-lg mt-3">Apply Now</a>
+  </div>
 </section>
-<div class="notice-bar py-2"><div class="notice-text">📢 Admission Open | 🏆 Excellent Results | 📚 Quality Education</div></div>
-<footer class="text-center py-4">© 2025 Kisan Inter College</footer>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init();</script>
+
+<!-- About Preview -->
+<section class="py-5">
+  <div class="container">
+    <h2>About Our College</h2>
+    <p>Kisan Inter College provides quality education up to 12th grade under UP Madhymik Shiksha Parishad.</p>
+    <a href="about.html" class="btn btn-primary">Learn More</a>
+  </div>
+</section>
+
+<!-- Academics Preview -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2>Our Academics</h2>
+    <p>We offer well-structured courses with experienced faculty and modern teaching methods.</p>
+    <a href="academics.html" class="btn btn-primary">View Courses</a>
+  </div>
+</section>
+
+<!-- Admission Preview -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2>Admission Open</h2>
+    <p>Apply online and get your registration number instantly.</p>
+    <a href="admission.html" class="btn btn-success btn-lg">Apply Now</a>
+  </div>
+</section>
+
+<!-- Faculty Preview -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2>Our Faculty</h2>
+    <p>Meet our experienced and dedicated teachers.</p>
+    <a href="faculty.html" class="btn btn-primary">View Faculty</a>
+  </div>
+</section>
+
+<!-- Notice Preview -->
+<section class="py-5">
+  <div class="container">
+    <h2>Latest Notices</h2>
+    <p>Check our dynamic notice board for latest updates.</p>
+    <a href="notice.html" class="btn btn-primary">View Notices</a>
+  </div>
+</section>
+
+<!-- Gallery Preview -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2>Gallery</h2>
+    <p>See our events and activities through photos.</p>
+    <a href="gallery.html" class="btn btn-primary">View Gallery</a>
+  </div>
+</section>
+
+<!-- Contact Preview -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2>Contact Us</h2>
+    <p>Get in touch with us for any queries.</p>
+    <a href="contact.html" class="btn btn-primary">Contact</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4">
+  &copy; 2025 Kisan Inter College. All Rights Reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 </body>
+</html>
