@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+</select>
+<input class="form-control mb-3" name="father" placeholder="Father Name" required>
+<input class="form-control mb-3" name="mobile" placeholder="Mobile Number" required>
+<textarea class="form-control mb-3" name="address" placeholder="Address"></textarea>
+<input class="form-control mb-3" name="previous" placeholder="Previous School">
+<button class="btn btn-primary w-100" id="btn">
+<span id="btnText">Submit</span>
+<span id="loader" class="spinner-border spinner-border-sm d-none"></span>
+</button>
+</form>
+<div id="msg" class="mt-3 text-center"></div>
+</div>
+</div>
+
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzQkwmJiYb3AdygMjalImVXuBE_P58X2yz2EV7YcYC_4xRbR7zkEKaCn-VIUqAajF2G/exec';
+const form = document.getElementById('admissionForm');
+const btnText = document.getElementById('btnText');
+const loader = document.getElementById('loader');
+const msg = document.getElementById('msg');
+
+
+form.addEventListener('submit', e => {
+e.preventDefault();
+btnText.textContent='Submitting';
+loader.classList.remove('d-none');
+fetch(scriptURL,{method:'POST',body:new FormData(form)})
+.then(res=>res.json())
+.then(data=>{
+msg.innerHTML=`<span class="text-success">Form Submitted! Registration No: <b>${data.reg}</b></span>`;
+form.reset();
+loadCount();
+})
+.catch(()=>msg.innerHTML='<span class="text-danger">Error!</span>')
+.finally(()=>{btnText.textContent='Submit';loader.classList.add('d-none')});
+});
+
+
+function loadCount(){
+fetch(scriptURL+'?count=1')
+.then(res=>res.text())
+.then(c=>document.getElementById('total').textContent=c);
+}
+loadCount();
+</script>
+</body>
+</html>
