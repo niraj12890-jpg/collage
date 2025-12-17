@@ -17,12 +17,18 @@
       max-width:600px;
       margin:auto;
       background:#fff;
-      padding:25px;
-      border-radius:10px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      padding:30px 25px;
+      border-radius:12px;
+      box-shadow:0 12px 35px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
     }
+    .admission-box:hover { transform: translateY(-2px); }
+    .form-control:focus { border-color:#0d6efd; box-shadow:0 0 5px rgba(13,110,253,0.5); }
     #spinner { margin-left: 10px; }
     .error-msg { color: red; font-size: 0.9em; display: none; }
+    @media(max-width: 576px) {
+      .admission-box { padding:20px 15px; }
+    }
   </style>
 </head>
 
@@ -54,7 +60,7 @@
 
       <div class="mb-3">
         <label for="dob" class="form-label">Date of Birth</label>
-        <input type="date" class="form-control" id="dob" max="2025-12-17" required>
+        <input type="date" class="form-control" id="dob" max="<?= new Date().toISOString().split('T')[0]; ?>" required>
         <div class="error-msg" id="dobError">Please select a valid date of birth.</div>
       </div>
 
@@ -126,7 +132,7 @@
   const mobileError = document.getElementById("mobileError");
   const classError = document.getElementById("classError");
 
-  // 🔴 PASTE YOUR DEPLOYED WEB APP URL BELOW
+  // 🔴 Your Google Apps Script URL
   const scriptURL = "https://script.google.com/macros/s/AKfycbzQkwmJiYb3AdygMjalImVXuBE_P58X2yz2EV7YcYC_4xRbR7zkEKaCn-VIUqAajF2G/exec";
 
   // Load total students count
@@ -139,33 +145,25 @@
 
   loadTotalStudents();
 
-  // Real-time input validation
-  nameInput.addEventListener("input", () => {
-    nameError.style.display = nameInput.value.trim() === "" ? "block" : "none";
-  });
-
-  dobInput.addEventListener("input", () => {
-    dobError.style.display = dobInput.value === "" ? "block" : "none";
-  });
-
+  // Real-time validation
+  nameInput.addEventListener("input", () => { nameError.style.display = nameInput.value.trim() === "" ? "block" : "none"; });
+  dobInput.addEventListener("input", () => { dobError.style.display = dobInput.value === "" ? "block" : "none"; });
   mobileInput.addEventListener("input", () => {
-    const pattern = /^[0-9]{10}$/;
-    mobileError.style.display = !pattern.test(mobileInput.value.trim()) ? "block" : "none";
+    let val = mobileInput.value.replace(/\D/g,'');
+    if(val.length > 10) val = val.slice(0,10);
+    mobileInput.value = val;
+    mobileError.style.display = val.length !== 10 ? "block" : "none";
   });
-
-  classSelect.addEventListener("change", () => {
-    classError.style.display = classSelect.value === "" ? "block" : "none";
-  });
+  classSelect.addEventListener("change", () => { classError.style.display = classSelect.value === "" ? "block" : "none"; });
 
   // Form submission
   admissionForm.addEventListener("submit", function(e){
     e.preventDefault();
 
     let valid = true;
-
     if(nameInput.value.trim() === "") { nameError.style.display="block"; valid=false; } else { nameError.style.display="none"; }
     if(dobInput.value === "") { dobError.style.display="block"; valid=false; } else { dobError.style.display="none"; }
-    if(!/^[0-9]{10}$/.test(mobileInput.value.trim())) { mobileError.style.display="block"; valid=false; } else { mobileError.style.display="none"; }
+    if(mobileInput.value.replace(/\D/g,'').length !== 10) { mobileError.style.display="block"; valid=false; } else { mobileError.style.display="none"; }
     if(classSelect.value === "") { classError.style.display="block"; valid=false; } else { classError.style.display="none"; }
 
     if(!valid) return;
@@ -176,7 +174,7 @@
       action: "admission",
       fullName: nameInput.value.trim(),
       dob: dobInput.value,
-      mobile: mobileInput.value.trim(),
+      mobile: mobileInput.value,
       class: classSelect.value
     };
 
