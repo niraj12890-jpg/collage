@@ -1,207 +1,76 @@
-// ====================== Admin Credentials ======================
-const adminCredentials = { username: "admin", password: "12345" };
+// 🔹 Replace with your deployed Google Script URL
+const scriptURL = "YOUR_WEB_APP_URL_HERE";
 
-// ------------------ Login Form ------------------
+// ------------------ LOGIN FORM ------------------
 const loginForm = document.getElementById("adminLoginForm");
-if (loginForm) {
+if(loginForm){
+  const spinner = document.getElementById("spinner");
   loginForm.addEventListener("submit", e => {
     e.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const spinner = document.getElementById("spinner");
     spinner.style.display = "inline-block";
 
-    setTimeout(() => {
+    fetch(scriptURL, {
+      method:"POST",
+      body: JSON.stringify({
+        action:"login",
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
       spinner.style.display = "none";
-      if (username === adminCredentials.username && password === adminCredentials.password) {
-        sessionStorage.setItem("admin", "true");
+      if(data.status==="success"){
+        sessionStorage.setItem("admin","true");
         window.location = "admin-dashboard.html";
-      } else {
+      }else{
         alert("Invalid credentials!");
       }
-    }, 800);
+    })
+    .catch(err=>{
+      spinner.style.display="none";
+      alert("Error connecting server!");
+      console.error(err);
+    });
   });
 }
 
-// ------------------ Logout Function ------------------
-function logout() {
-  sessionStorage.removeItem("admin");
+// ------------------ SESSION PROTECTION ------------------
+if(window.location.pathname.includes("admin-dashboard.html") && sessionStorage.getItem("admin")!=="true"){
   window.location = "admin-login.html";
 }
 
-// ------------------ Session Protection ------------------
-if (
-  window.location.pathname.includes("admin-dashboard.html") ||
-  window.location.pathname.includes("admissions.html") ||
-  window.location.pathname.includes("notices.html") ||
-  window.location.pathname.includes("gallery.html") ||
-  window.location.pathname.includes("results.html") ||
-  window.location.pathname.includes("idcards.html")
-) {
-  if (sessionStorage.getItem("admin") !== "true") {
-    window.location = "admin-login.html";
-  }
+// ------------------ LOGOUT ------------------
+function logout(){
+  sessionStorage.removeItem("admin");
+  window.location="admin-login.html";
 }
 
-// ====================== Google Sheet Integration ======================
-// 🔹 Replace with your deployed Google Script URL
-const sheetURL = "https://script.google.com/macros/s/AKfycbzQkwmJiYb3AdygMjalImVXuBE_P58X2yz2EV7YcYC_4xRbR7zkEKaCn-VIUqAajF2G/exec";
-
-// ------------------ Load Admissions ------------------
-async function loadAdmissions() {
-  const table = document.getElementById("admissionsTable");
-  if (!table) return;
-
-  try {
-    const res = await fetch(sheetURL + "?action=fetchAdmissions");
-    const data = await res.json();
-    table.innerHTML = "";
-
-    if (!data.length) {
-      table.innerHTML = `<tr><td colspan="6" class="text-center">No admissions yet</td></tr>`;
-      return;
-    }
-
-    data.forEach((stu, i) => {
-      table.innerHTML += `<tr>
-        <td>${i + 1}</td>
-        <td>${stu.fullName}</td>
-        <td>${stu.dob}</td>
-        <td>${stu.mobile}</td>
-        <td>${stu.class}</td>
-        <td>${stu.regNo}</td>
-      </tr>`;
-    });
-  } catch (err) {
-    console.error("Error fetching admissions:", err);
-    table.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load data</td></tr>`;
-  }
+// ------------------ DASHBOARD DATA FETCH ------------------
+function fetchAdmissions(){
+  fetch(scriptURL+"?action=fetchAdmissions")
+    .then(r=>r.json())
+    .then(data=>console.log("Admissions:",data))
+    .catch(e=>console.error(e));
+}
+function fetchNotices(){
+  fetch(scriptURL+"?action=fetchNotices")
+    .then(r=>r.json())
+    .then(data=>console.log("Notices:",data))
+    .catch(e=>console.error(e));
+}
+function fetchGallery(){
+  fetch(scriptURL+"?action=fetchGallery")
+    .then(r=>r.json())
+    .then(data=>console.log("Gallery:",data))
+    .catch(e=>console.error(e));
+}
+function fetchResults(){
+  fetch(scriptURL+"?action=fetchResults")
+    .then(r=>r.json())
+    .then(data=>console.log("Results:",data))
+    .catch(e=>console.error(e));
 }
 
-// ------------------ Load Notices ------------------
-async function loadNotices() {
-  const container = document.getElementById("noticesContainer");
-  if (!container) return;
-
-  try {
-    const res = await fetch(sheetURL + "?action=fetchNotices");
-    const data = await res.json();
-
-    container.innerHTML = "";
-    if (!data.length) {
-      container.innerHTML = `<p class="text-center">No notices yet</p>`;
-      return;
-    }
-
-    data.forEach(n => {
-      container.innerHTML += `<div class="col-md-4 mb-3">
-        <div class="card p-3 card-hover">
-          <h6>${n.title}</h6>
-          <p class="mb-0">Date: ${n.date}</p>
-        </div>
-      </div>`;
-    });
-  } catch (err) {
-    console.error("Error fetching notices:", err);
-    container.innerHTML = `<p class="text-center text-danger">Failed to load notices</p>`;
-  }
-}
-
-// ------------------ Load Gallery ------------------
-async function loadGallery() {
-  const container = document.getElementById("galleryContainer");
-  if (!container) return;
-
-  try {
-    const res = await fetch(sheetURL + "?action=fetchGallery");
-    const data = await res.json();
-
-    container.innerHTML = "";
-    if (!data.length) {
-      container.innerHTML = `<p class="text-center">No gallery images</p>`;
-      return;
-    }
-
-    data.forEach(g => {
-      container.innerHTML += `<div class="col-md-4 mb-3">
-        <div class="card card-hover">
-          <img src="${g.img}" class="card-img-top" alt="${g.title}">
-          <div class="card-body">
-            <h6 class="card-title">${g.title}</h6>
-          </div>
-        </div>
-      </div>`;
-    });
-  } catch (err) {
-    console.error("Error fetching gallery:", err);
-    container.innerHTML = `<p class="text-center text-danger">Failed to load gallery</p>`;
-  }
-}
-
-// ------------------ Load Results ------------------
-async function loadResults() {
-  const table = document.getElementById("resultsTable");
-  if (!table) return;
-
-  try {
-    const res = await fetch(sheetURL + "?action=fetchResults");
-    const data = await res.json();
-
-    table.innerHTML = "";
-    if (!data.length) {
-      table.innerHTML = `<tr><td colspan="5" class="text-center">No results yet</td></tr>`;
-      return;
-    }
-
-    data.forEach((r, i) => {
-      table.innerHTML += `<tr>
-        <td>${i + 1}</td>
-        <td>${r.name}</td>
-        <td>${r.class}</td>
-        <td>${r.subject}</td>
-        <td>${r.marks}</td>
-      </tr>`;
-    });
-  } catch (err) {
-    console.error("Error fetching results:", err);
-    table.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Failed to load results</td></tr>`;
-  }
-}
-
-// ------------------ Load ID Cards ------------------
-async function loadIDCards() {
-  const table = document.getElementById("idcardsTable");
-  if (!table) return;
-
-  try {
-    const res = await fetch(sheetURL + "?action=fetchAdmissions");
-    const data = await res.json();
-
-    table.innerHTML = "";
-    if (!data.length) {
-      table.innerHTML = `<tr><td colspan="4" class="text-center">No data</td></tr>`;
-      return;
-    }
-
-    data.forEach((stu, i) => {
-      table.innerHTML += `<tr>
-        <td>${i + 1}</td>
-        <td>${stu.fullName}</td>
-        <td>${stu.class}</td>
-        <td>${stu.regNo}</td>
-      </tr>`;
-    });
-  } catch (err) {
-    console.error("Error loading ID Cards:", err);
-    table.innerHTML = `<tr><td colspan="4" class="text-center text-danger">Failed to load data</td></tr>`;
-  }
-}
-
-// ====================== Initialize All ======================
-document.addEventListener("DOMContentLoaded", () => {
-  loadAdmissions();
-  loadNotices();
-  loadGallery();
-  loadResults();
-  loadIDCards();
-});
+function generateIDCards(){ alert("ID Cards feature coming soon."); }
+function openSettings(){ alert("Settings feature coming soon."); }
