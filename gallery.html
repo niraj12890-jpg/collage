@@ -4,24 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery | Kisan Inter College</title>
+
+<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Common Website CSS -->
 <link rel="stylesheet" href="style.css">
+
 <style>
-  .gallery-img{cursor:pointer; transition:0.3s;}
-  .gallery-img:hover{transform:scale(1.05);}
-  #popupOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;z-index:9999;}
-  #popupOverlay img{max-width:90%;max-height:90%;}
+  .gallery-img{
+    cursor:pointer;
+    transition:0.4s;
+    border-radius:12px;
+  }
+  .gallery-img:hover{
+    transform:scale(1.05);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  }
+  #popupOverlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+  }
+  #popupOverlay img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:15px;
+  }
 </style>
 </head>
+
 <body>
 
-<!-- Navigation -->
+<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 <div class="container">
 <a class="navbar-brand" href="index.html">Kisan Inter College</a>
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
   <span class="navbar-toggler-icon"></span>
 </button>
+
 <div class="collapse navbar-collapse" id="navbarNav">
 <ul class="navbar-nav ms-auto">
   <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -38,39 +64,89 @@
 </div>
 </nav>
 
+<!-- ================= GALLERY SECTION ================= -->
 <section class="py-5">
 <div class="container">
-<h1 class="text-center mb-4">Gallery</h1>
-<div class="row g-3">
-  <div class="col-md-4"><img src="https://via.placeholder.com/300x200" class="img-fluid gallery-img" alt="Gallery"></div>
-  <div class="col-md-4"><img src="https://via.placeholder.com/300x200" class="img-fluid gallery-img" alt="Gallery"></div>
-  <div class="col-md-4"><img src="https://via.placeholder.com/300x200" class="img-fluid gallery-img" alt="Gallery"></div>
+<h1 class="text-center mb-5">College Gallery</h1>
+
+<div class="row g-4">
+
+  <!-- REPLACE THIS IMAGE LATER (School Building) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b"
+         class="img-fluid gallery-img"
+         alt="School Building">
+  </div>
+
+  <!-- REPLACE THIS IMAGE LATER (Classroom) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238"
+         class="img-fluid gallery-img"
+         alt="Classroom">
+  </div>
+
+  <!-- REPLACE THIS IMAGE LATER (Computer Lab) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1584697964154-3a0ecf25b53c"
+         class="img-fluid gallery-img"
+         alt="Computer Lab">
+  </div>
+
+  <!-- REPLACE THIS IMAGE LATER (Library) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f"
+         class="img-fluid gallery-img"
+         alt="Library">
+  </div>
+
+  <!-- REPLACE THIS IMAGE LATER (Sports Ground) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1596496050827-8299e0220de1"
+         class="img-fluid gallery-img"
+         alt="Sports Ground">
+  </div>
+
+  <!-- REPLACE THIS IMAGE LATER (School Event) -->
+  <div class="col-md-4">
+    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7"
+         class="img-fluid gallery-img"
+         alt="School Event">
+  </div>
+
 </div>
 </div>
 </section>
 
-<!-- Popup -->
-<div id="popupOverlay" class="d-flex"><img src="" alt="popup"></div>
+<!-- ================= IMAGE POPUP ================= -->
+<div id="popupOverlay" class="d-flex">
+  <img src="" alt="Popup Image">
+</div>
 
+<!-- ================= FOOTER ================= -->
 <footer class="bg-dark text-white text-center py-4">
   &copy; 2025 Kisan Inter College. All Rights Reserved.
 </footer>
 
+<!-- ================= SCRIPT ================= -->
 <script>
-const galleryImages=document.querySelectorAll('.gallery-img');
-const popupOverlay=document.getElementById('popupOverlay');
-const popupImg=popupOverlay.querySelector('img');
+const galleryImages = document.querySelectorAll('.gallery-img');
+const popupOverlay = document.getElementById('popupOverlay');
+const popupImg = popupOverlay.querySelector('img');
 
 galleryImages.forEach(img=>{
   img.addEventListener('click',()=>{
-    popupImg.src=img.src;
-    popupOverlay.style.display='flex';
+    popupImg.src = img.src;
+    popupOverlay.style.display = 'flex';
   });
 });
 
-popupOverlay.addEventListener('click',()=>popupOverlay.style.display='none');
+popupOverlay.addEventListener('click',()=>{
+  popupOverlay.style.display = 'none';
+});
 </script>
 
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
