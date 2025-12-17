@@ -1,5 +1,5 @@
 // 🔹 Replace with your deployed Google Script URL
-const scriptURL = "YOUR_WEB_APP_URL_HERE";
+const scriptURL = "https://script.google.com/macros/s/AKfycbzQkwmJiYb3AdygMjalImVXuBE_P58X2yz2EV7YcYC_4xRbR7zkEKaCn-VIUqAajF2G/exec";
 
 // ------------------ LOGIN FORM ------------------
 const loginForm = document.getElementById("adminLoginForm");
